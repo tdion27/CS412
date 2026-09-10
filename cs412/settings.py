@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-#h6w-03$^jateo=u4yvv3up)rqfo@!4n9o5m39d-qlgevayjyk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'cs-webapps.bu.edu',
+]
 
 
 # Application definition
@@ -127,3 +129,21 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+import os   
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/' 
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL= "media/"  
+
+import socket
+CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
+
+if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    STATIC_URL = '/tdion/static/'
+    MEDIA_URL = '/tdion/media/'
