@@ -25,7 +25,7 @@ a:hover {
 body {
     max-width: 960px;
     margin: 20px auto;
-    padding: 20px auto;
+    padding: 0 20px;
 }
 
 header {
@@ -35,8 +35,10 @@ header {
     background:aliceblue;
     position: fixed;
     top: 0px;
+    left: 0px;
     z-index: 999;
-    /* padding-right: 50px auto; */
+    padding: 10px 20px;
+    box-sizing: border-box;
 }
 
 footer {
@@ -65,7 +67,7 @@ div.wrapper h1 {
     text-align: center;
     color: darkblue;
     margin: 10px auto;
-    font-size: 2.4 em; 
+    font-size: 2.4em; 
 
 }
 
@@ -73,7 +75,7 @@ div.wrapper h2 {
     text-align: left;
     color: darkblue;
     margin: 5px auto;
-    font-size: 2 em; 
+    font-size: 2em; 
 }
 
 
@@ -102,7 +104,7 @@ nav button {
     font-family: Arial;
     cursor: pointer; 
     border: 0;
-    font-size: 1.2 em;
+    font-size: 1.2em;
 }
 
 .mc-table {
@@ -170,7 +172,7 @@ nav button {
 .site-form input [type="submit"] {
     background: slategray;
     border: 0;
-    color: fff;
+    color: #fff;
     font-size: 1.2em;
     border-radius: 4px;
     margin: 5px 0;
@@ -199,11 +201,15 @@ nav button {
     padding: 0px;
 }
 
+main {
+    margin-top: 80px; 
+    padding: 20px;
+}
 
 /* responsive styles when width is less than 1400px */
 @media screen and (max-width: 560px) {
     header h1 {
-        size: 0.8em;
+        font-size: 0.8em;
     }
 
     nav li {

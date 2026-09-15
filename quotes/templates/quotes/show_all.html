@@ -1,0 +1,15 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+    <h2>All Quotes</h2>
+    <ul>
+    {% for q in quotes %}
+        <li>"{{ q }}"</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Gallery</h2>
+    {% for img in images %}
+        <img src="{{ img }}" width="300">
+    {% endfor %}
+{% endblock %}

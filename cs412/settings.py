@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'cs-webapps.bu.edu',
+    'localhost',
+    '127.0.0.1',
 ]
 
 
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hw',
+    'quotes',
 ]
 
 MIDDLEWARE = [
@@ -118,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/tdion/static/'
 
 
 # Email
@@ -130,9 +133,12 @@ MAILERS = {
     },
 }
 
-import os   
+import os
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = 'static/' 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -147,3 +153,4 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/tdion/static/'
     MEDIA_URL = '/tdion/media/'
+
