@@ -7,6 +7,13 @@ quotes = [
 "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.",
 "There is no greater agony than bearing an untold story inside you.",
 "What you're supposed to do when you don't like a thing is change it. If you can't change it, change the way you think about it. Don't complain.",
+"When someone shows you who they are believe them the first time.",
+"We delight in the beauty of the butterfly, but rarely admit the changes it has gone through to achieve that beauty.",
+"Courage is the most important of all the virtues because without courage, you can't practice any other virtue consistently.",
+"You may not control all the events that happen to you, but you can decide not to be reduced by them.",
+"I did then what I knew how to do. Now that I know better, I do better.",
+"Music was my refuge. I could crawl into the space between the notes and curl my back to loneliness.",
+"Success is liking yourself, liking what you do, and liking how you do it.",
 ]
 
 images = [
