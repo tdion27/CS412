@@ -1,3 +1,5 @@
+<!-- restaurant/templates/restaurant/order.html -->
+
 {% extends 'restaurant/base.html' %}
  
  
@@ -21,6 +23,8 @@
     Substitute Veggie Patty +$2: <input type="checkbox" name="veggie">
     <br>
     Special: {{ special }} $15: <input type="checkbox" name="special">
+    <br>
+    Special Instructions: <input type="text" name="instructions">
     <br>
     <input type="submit">
 </form>

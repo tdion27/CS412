@@ -1,3 +1,4 @@
+<!-- restaurant/templates/restaurant/confirmation.html -->
 {% extends 'restaurant/base.html' %}
  
  
@@ -15,6 +16,7 @@
             <li>Please place a real order!</li>
         {% endfor %}
     </ul>
+    <p>With special instructions: {{instructions}}</p>
     <p>Your total is ${{total}}.</p>
     <p>Please pick up your order around {{pickupTime}}.</p>
  
