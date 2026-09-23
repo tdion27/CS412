@@ -8,3 +8,16 @@
  
     <p>Thank you for your order, {{name}}!</p>
     <h3>Your Order:</h3>
+    <ul>
+        {% for item in order %}
+            <li>{{ item }}</li>
+        {% empty %}
+            <li>Please place a real order!</li>
+        {% endfor %}
+    </ul>
+    <p>Your total is ${{total}}.</p>
+    <p>Please pick up your order around {{pickupTime}}.</p>
+ 
+ 
+</div>
+{% endblock %}
