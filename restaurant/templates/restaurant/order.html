@@ -1,0 +1,23 @@
+{% extends 'restaurant/base.html' %}
+ 
+ 
+{% block content %}
+<div>
+<h1>Order Form</h1>
+ 
+ 
+<form action="{% url 'confirmation' %}" method="POST">
+    {% csrf_token %}
+    Customer Name: <input type="text" name="name">
+    <br>
+    Mountain Heritage Fried Chicken $15: <input type="checkbox" name="chicken">
+    <br>
+    Slow-Braised Pot Roast $20: <input type="checkbox" name="roast">
+    <br>
+    Pan-Seared Trout $12: <input type="checkbox" name="trout">
+    <br>
+    Burger $16: <input type="checkbox" name="burger">
+    Add Bacon +$7: <input type="checkbox" name="bacon">
+    Substitute Veggie Patty +$2: <input type="checkbox" name="veggie">
+    <br>
+    Special: {{ special }} $15: <input type="checkbox" n

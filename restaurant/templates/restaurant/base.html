@@ -1,0 +1,21 @@
+{% load static %}
+<!-- restaurant/templates/restaurant/base.html -->
+<html>
+    <head>
+        <title>The Rustic Clove</title>
+        <link rel="stylesheet" href="{% static 'quotes_style.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>The Rustic Clove</h1>
+            <nav>
+                <a href="{% url 'main' %}">Main Page</a>
+                <a href="{% url 'order' %}">Order Page</a>
+            </nav>
+        </header>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
