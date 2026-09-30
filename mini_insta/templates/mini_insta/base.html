@@ -1,0 +1,23 @@
+<!-- mini_insta/templates/mini_insta/base.html -->
+{% load static %}
+<html>
+    <head>
+        <title>Welcome to Mini Instagram</title>
+        <link rel="stylesheet" href="{% static 'mini_insta_style.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>Mini Instagram</h1>
+            <nav>
+                <!--TODO--> 
+            </nav>
+        </header>
+    
+    {% block content %}
+    {% endblock %}    
+    
+    <footer>
+        <a href="{% url 'show_all' %}">Home</a>
+    </footer>
+    </body>
+</html>

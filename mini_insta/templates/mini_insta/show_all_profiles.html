@@ -1,0 +1,24 @@
+<!-- mini_insta/templates/mini_insta/show_all_profiles.html -->
+
+{% extends 'mini_insta/base.html' %}
+<!-- scriptlet code to display the value of the variable `profiles` 
+{{ profiles }}
+-->
+{% block content %}
+<main class="grid-container">
+    <article class="profile-info">
+    {% for p in profiles %}
+        {% if p.profile_image_url %}
+        <a href="{% url 'profile' p.pk %}">
+        <img src="{{p.profile_image_url}}" alt="{{p.profile_image_url}}">
+        </a>
+        {% endif %}
+        
+        <div>
+        <h2>{{p.display_name}}</h2>
+        <p>{{p.username}}</p>
+        </div>
+    {% endfor %}
+    </article>
+</main>
+{% endblock %}
