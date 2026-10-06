@@ -3,10 +3,11 @@
 # Description: Contains the url paths for the mini_insta app
 
 from django.urls import path
-from .views import ShowAllView, ProfileView
+from .views import *
  
 # define the url patterns for the application
 urlpatterns = [       
     path('', ShowAllView.as_view(), name='show_all'),
-    path('profile/<int:pk>', ProfileView.as_view(), name='profile')
+    path('profile/<int:pk>', ProfileView.as_view(), name='profile'),
+    path('post/<int:pk>', PostDetailView.as_view(), name='post_detail'),
 ]

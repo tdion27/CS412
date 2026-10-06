@@ -24,6 +24,13 @@ h1 {
     margin: 0 auto;
 }
 
+.grid-container img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;  
+    display: block;
+}
+
 /* Individual Profile Cards */
 article {
     background-color: #ffffff;

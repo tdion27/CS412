@@ -1,0 +1,22 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="post-info">
+    <h2>Post by {{ post.profile.username }}</h2>
+    <p><strong>Caption:</strong> {{ post.caption }}</p>
+    <p><small>Posted on: {{ post.timestamp }}</small></p>
+</div>
+
+<main class="grid-container">
+    <!-- Loop through every photo attached to this specific post -->
+    {% for photo in post.get_all_photos %}
+        <div>
+            <img src="{{ photo.image_url }}" alt="Image for post {{ post.pk }}">
+        </div>
+    {% empty %}
+        <div>
+            <img src="https://via.placeholder.com/300?text=No+Image" alt="No image available">
+        </div>
+    {% endfor %}
+</main>
+{% endblock %}
