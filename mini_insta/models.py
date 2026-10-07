@@ -2,6 +2,7 @@
 # Author: Thomas Dion (tdion@bu.edu), 9/29/2026
 # Description: Contains the models  for the mini_insta app
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -32,6 +33,9 @@ class Post(models.Model):
     def get_all_photos(self):
         photos = Photo.objects.filter(post=self)
         return photos
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'pk': self.pk})
     
 
 class Photo(models.Model):

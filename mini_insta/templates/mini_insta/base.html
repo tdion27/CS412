@@ -18,6 +18,9 @@
     
     <footer>
         <a href="{% url 'show_all' %}">Home</a>
+        {% if profile %}
+        <a href="{% url 'create_post' profile.pk %}">New Post</a>
+        {% endif %}
     </footer>
     </body>
 </html>

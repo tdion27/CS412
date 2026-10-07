@@ -2,8 +2,10 @@
 # Author: Thomas Dion (tdion@bu.edu), 9/29/2026
 # Description: Contains the views for the mini_insta app
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import Profile, Post
+from django.views.generic import ListView, DetailView, CreateView
+from .models import Profile, Post, Photo
+from .forms import CreatePostForm
+from django.urls import reverse
 
 # Create your views here.
 
@@ -24,3 +26,23 @@ class PostDetailView(DetailView):
     model = Post
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
+
+class CreatePostView(CreateView):
+    model = Post
+    form_class = CreatePostForm
+    template_name = 'mini_insta/create_post_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        context['profile'] = profile
+        return context
+
+    def form_valid(self, form):
+        profile = Profile.objects.get(pk=self.kwargs['pk'])    
+        form.instance.profile = profile
+        response = super().form_valid(form)
+        image_url = self.request.POST.get('image_url')
+        if image_url:
+            Photo.objects.create(post=self.object, image_url=image_url) 
+        return response

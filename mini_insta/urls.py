@@ -10,4 +10,5 @@ urlpatterns = [
     path('', ShowAllView.as_view(), name='show_all'),
     path('profile/<int:pk>', ProfileView.as_view(), name='profile'),
     path('post/<int:pk>', PostDetailView.as_view(), name='post_detail'),
+    path('profile/<int:pk>/create_post', CreatePostView.as_view(), name='create_post')
 ]
