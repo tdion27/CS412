@@ -11,7 +11,7 @@
     <!-- Loop through every photo attached to this specific post -->
     {% for photo in post.get_all_photos %}
         <div>
-            <img src="{{ photo.image_url }}" alt="Image for post {{ post.pk }}">
+            <img src="{{ photo.get_image_url }}" alt="Image for post {{ post.pk }}">
         </div>
     {% empty %}
         <div>

@@ -23,7 +23,7 @@
         <div>
         <a href="{% url 'post_detail' post.pk %}">
         {% if post.get_all_photos %}
-        <img src ="{{ post.get_all_photos.first.image_url }}" alt="{{ post.caption }}">
+        <img src="{{ post.get_all_photos.first.get_image_url }}" alt="{{ post.caption }}">
         {% else %}
         <img src="https://media.istockphoto.com/id/1334419989/photo/3d-red-question-mark.jpg?s=612x612&w=0&k=20&c=bpaGVuyt_ACui3xK8CvkeoVQC-jczxANZTMXGKAE11E=" alt="No image associated with post">
         {% endif %}
