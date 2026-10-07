@@ -21,27 +21,32 @@ class ProfileView(DetailView):
     template_name = "mini_insta/profile.html"
     context_object_name = "profile"
 
-#Ctreate the Detail view to display a single post's details
+#Create the Detail view to display a single post's details
 class PostDetailView(DetailView):
     model = Post
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
 
+#Create the Create view to create a post
 class CreatePostView(CreateView):
     model = Post
     form_class = CreatePostForm
     template_name = 'mini_insta/create_post_form.html'
 
+    #Get context items for the post form
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.get(pk=self.kwargs['pk'])
         context['profile'] = profile
         return context
 
+    #Method to attach Profile and process images
     def form_valid(self, form):
         profile = Profile.objects.get(pk=self.kwargs['pk'])    
         form.instance.profile = profile
         response = super().form_valid(form)
+
+        #Commenting out old code
         #image_url = self.request.POST.get('image_url')
         #if image_url:
         #    Photo.objects.create(post=self.object, image_url=image_url) 

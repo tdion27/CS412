@@ -22,22 +22,26 @@ class Profile(models.Model):
             posts = Post.objects.filter(profile=self)
             return posts
 
+#Define the Post model
 class Post(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     caption = models.TextField(blank=False)
     timestamp = models.DateTimeField(auto_now=True)
-    
+
+    #Allow a string representation for a post to be created
     def __str__(self):
             return f'{self.caption}'
 
+    #Get method for photos
     def get_all_photos(self):
         photos = Photo.objects.filter(post=self)
         return photos
 
+    #Create the URL for for submission
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
     
-
+#Define the Photo model
 class Photo(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
@@ -45,6 +49,7 @@ class Photo(models.Model):
     image_file = models.ImageField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
     
+    #Allow a string representation for a photo to be created
     def __str__(self):
         if self.image_url:
             return f'{self.image_url}'
@@ -52,6 +57,7 @@ class Photo(models.Model):
              return f'{self.image_file.url}'
         return f'Photo {self.pk}'
 
+    #Get method image URL
     def get_image_url(self):
          if self.image_url:
               return self.image_url
