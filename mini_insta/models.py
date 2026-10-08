@@ -16,9 +16,11 @@ class Profile(models.Model):
 
     #Allow a string representation for a profile to be created
     def __str__(self):
+        '''create a string representation of a post'''
         return f'{self.username}'
 
     def get_all_posts(self):
+            '''get method for all posts associated with a profile'''
             posts = Post.objects.filter(profile=self)
             return posts
 
@@ -30,15 +32,18 @@ class Post(models.Model):
 
     #Allow a string representation for a post to be created
     def __str__(self):
+            '''create a string representation of the post'''
             return f'{self.caption}'
 
     #Get method for photos
     def get_all_photos(self):
+        '''get method for photos'''
         photos = Photo.objects.filter(post=self)
         return photos
 
     #Create the URL for for submission
     def get_absolute_url(self):
+        '''get success URL upon form submission'''
         return reverse('post_detail', kwargs={'pk': self.pk})
     
 #Define the Photo model
@@ -51,6 +56,7 @@ class Photo(models.Model):
     
     #Allow a string representation for a photo to be created
     def __str__(self):
+        '''create a string representation of the photo'''
         if self.image_url:
             return f'{self.image_url}'
         elif self.image_file:
@@ -59,6 +65,7 @@ class Photo(models.Model):
 
     #Get method image URL
     def get_image_url(self):
+         '''get the image URL'''
          if self.image_url:
               return self.image_url
          elif self.image_file:

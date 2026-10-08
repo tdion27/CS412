@@ -35,6 +35,7 @@ class CreatePostView(CreateView):
 
     #Get context items for the post form
     def get_context_data(self, **kwargs):
+        '''Return the dictionary of context variables for use in the template.'''
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.get(pk=self.kwargs['pk'])
         context['profile'] = profile
@@ -42,6 +43,7 @@ class CreatePostView(CreateView):
 
     #Method to attach Profile and process images
     def form_valid(self, form):
+        '''Overwrite form_valid method to attach foreign key'''
         profile = Profile.objects.get(pk=self.kwargs['pk'])    
         form.instance.profile = profile
         response = super().form_valid(form)
