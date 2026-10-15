@@ -2,9 +2,9 @@
 # Author: Thomas Dion (tdion@bu.edu), 9/29/2026
 # Description: Contains the views for the mini_insta app
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Profile, Post, Photo
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
 
 # Create your views here.
@@ -57,3 +57,12 @@ class CreatePostView(CreateView):
         for file in files:
             Photo.objects.create(post=self.object, image_file=file)
         return response
+
+class UpdateProfileView(UpdateView):
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = "mini_insta/update_profile_form.html"
+
+    def get_success_url(self):
+            pk = self.kwargs['pk']
+            return reverse('profile', kwargs={'pk':pk})
