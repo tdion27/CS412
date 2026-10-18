@@ -19,5 +19,7 @@
             <img src="https://via.placeholder.com/300?text=No+Image" alt="No image available">
         </div>
     {% endfor %}
+    <a href="{% url 'delete_post' post.pk %}">Delete</a> 
+    <a href="{% url 'update_post' post.pk %}">Update</a> 
 </main>
 {% endblock %}

@@ -2,7 +2,7 @@
 # Author: Thomas Dion (tdion@bu.edu), 9/29/2026
 # Description: Contains the views for the mini_insta app
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
@@ -66,3 +66,31 @@ class UpdateProfileView(UpdateView):
     def get_success_url(self):
             pk = self.kwargs['pk']
             return reverse('profile', kwargs={'pk':pk})
+
+class UpdatePostView(UpdateView):
+    model = Post
+    template_name = "mini_insta/update_post_form.html"
+    fields = ['caption']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = self.object.profile
+        return context
+    
+    def get_success_url(self):
+            pk = self.kwargs['pk']
+            return reverse('post_detail', kwargs={'pk': pk})
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = "mini_insta/delete_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = self.object.profile
+        return context
+
+    def get_success_url(self):
+        pk = self.object.profile.pk
+        return reverse('profile', kwargs={'pk':pk})
+    

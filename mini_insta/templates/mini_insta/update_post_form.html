@@ -1,0 +1,24 @@
+<!-- mini_insta/templates/mini_insta/delete_post_form.html -->
+{% extends 'mini_insta/base.html' %}
+ 
+{% block content %}
+<h3>Update This Post</h3>
+ 
+<p>
+{{ post }}
+</p>
+ 
+<form action="{% url 'update_post' post.pk %}" method="POST">
+    {% csrf_token %}
+    <table>
+    {{form.as_table}}
+    </table>
+ 
+ 
+    <input type="submit" name="submit" value="Update">
+    <form action="{% url 'update_post' post.pk %}" method="GET">
+        <input type="submit" value="Cancel">
+    </form>
+</form>
+ 
+{% endblock %}
