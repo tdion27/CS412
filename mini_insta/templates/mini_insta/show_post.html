@@ -4,8 +4,22 @@
 {% block content %}
 <div class="post-info">
     <h2>Post by {{ post.profile.username }}</h2>
+    <p><strong>{{ post.get_likes.count }} Likes</strong></p>
     <p><strong>Caption:</strong> {{ post.caption }}</p>
     <p><small>Posted on: {{ post.timestamp }}</small></p>
+    <div>
+        <h3>Comments</h3>
+        {% for comment in post.get_all_comments %}
+            <div>
+                <strong><a href="{% url 'profile' comment.profile.pk %}">{{ comment.profile.username }}</a></strong>: 
+                {{ comment.text }}
+                <br>
+                <small>{{ comment.timestamp }}</small>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
 </div>
 
 <main class="grid-container">

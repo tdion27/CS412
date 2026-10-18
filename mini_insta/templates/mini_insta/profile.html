@@ -13,9 +13,17 @@
         <h2>{{profile.display_name}}</h2>
         <h3>{{profile.username}}</h3>
         <h3>{{profile.bio_text}}</h3>
-        <h4> TBD Followers </h4>
-        <h4> TBD Following </h4>
-        <h4> TBD Posts </h4>
+        <h4> 
+            <a href="{% url 'show_followers' profile.pk %}">
+                {{ profile.get_num_followers }} Followers
+            </a> 
+        </h4>
+        <h4> 
+            <a href="{% url 'show_following' profile.pk %}">
+                {{ profile.get_num_following }} Following
+            </a> 
+        </h4>
+        <h4> {{ profile.get_all_posts.count }} Posts </h4>
         </div> 
  </article>
 

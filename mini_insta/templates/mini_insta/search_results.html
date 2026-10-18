@@ -1,0 +1,32 @@
+<!-- mini_insta/templates/mini_insta/serach_results.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main>
+    <h2>Search Results for "{{ query }}"</h2>
+    <p><a href="{% url 'search' profile.pk %}"> New Search</a></p>
+    <h3>Profiles</h3>
+    {% for p in profiles %}
+        <div>
+            <strong><a href="{% url 'profile' p.pk %}">{{ p.username }}</a></strong>
+            {% if p.display_name %}({{ p.display_name }}){% endif %}
+            <p><small>{{ p.bio_text }}</small></p>
+        </div>
+    {% empty %}
+        <p>No profiles matched your search.</p>
+    {% endfor %}
+    <h3>Posts</h3>
+    {% for post in posts %}
+        <div>
+            <p><strong><a href="{% url 'profile' post.profile.pk %}">{{ post.profile.username }}</a></strong></p>
+            {% if post.get_all_photos %}
+                <img src="{{ post.get_all_photos.first.get_image_url }}">
+            {% endif %}
+            <p>{{ post.caption }}</p>
+            <p><a href="{% url 'post_detail' post.pk %}">View Post</a></p>
+        </div>
+    {% empty %}
+        <p>No posts matched your search.</p>
+    {% endfor %}
+</main>
+{% endblock %}

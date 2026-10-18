@@ -1,0 +1,39 @@
+<!-- mini_insta/templates/mini_insta/show_feed.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main>
+    <div>
+        <a href="{% url 'profile' profile.pk %}">Back to {{ profile.username }}'s Profile</a>
+    </div>
+
+    {% for post in profile.get_post_feed %}
+        <article>
+            <div>
+                <img src="{{ post.profile.profile_image_url }}" alt="avatar" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 10px;">
+                <strong><a href="{% url 'profile' post.profile.pk %}">{{ post.profile.username }}</a></strong>
+            </div>
+            {% if post.get_all_photos %}
+                <img src="{{ post.get_all_photos.first.get_image_url }}" alt="Post image" style="width: 100%; display: block;">
+            {% endif %}
+            <div>
+                <p><strong>{{ post.get_likes.count }} Likes</strong></p>
+                <p><strong>{{ post.profile.username }}</strong> {{ post.caption }}</p>
+                <p><small>{{ post.timestamp }}</small></p>
+            </div>
+            <div>
+                {% for comment in post.get_all_comments %}
+                    <p>
+                        <strong>{{ comment.profile.username }}</strong> {{ comment.text }}
+                    </p>
+                {% endfor %}
+            </div>
+        </article>
+    {% empty %}
+        <div>
+            <h3>Your feed is empty</h3>
+            <p>Go follow some profiles to see their posts here</p>
+        </div>
+    {% endfor %}
+</main>
+{% endblock %}

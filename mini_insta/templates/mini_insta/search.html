@@ -1,0 +1,15 @@
+<!-- mini_insta/templates/mini_insta/search.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main>
+    <h2>Search Mini Insta</h2>
+    <form action="{% url 'search' profile.pk %}" method="GET">
+        <input type="text" name="query">
+        <input type="submit" value="Search">
+    </form>
+    
+    <br>
+    <a href="{% url 'profile' profile.pk %}">Cancel</a>
+</main>
+{% endblock %}
