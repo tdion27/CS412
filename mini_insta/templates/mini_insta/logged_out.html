@@ -1,0 +1,10 @@
+<!-- mini_insta/templates/mini_insta/logged_out.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main >
+    <h2>Logged Out</h2>
+    <p>You have been logged out.</p>
+    <a href="{% url 'login' %}">Log in</a>
+</main>
+{% endblock %}

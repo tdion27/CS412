@@ -7,6 +7,12 @@
     <p><strong>{{ post.get_likes.count }} Likes</strong></p>
     <p><strong>Caption:</strong> {{ post.caption }}</p>
     <p><small>Posted on: {{ post.timestamp }}</small></p>
+    {% if request.user.is_authenticated and request.user != post.profile.user %}
+    <div >
+        <a href="{% url 'like' post.pk %}">Like</a>
+        <a href="{% url 'delete_like' post.pk %}">Unlike</a>
+    </div>
+{% endif %}
     <div>
         <h3>Comments</h3>
         {% for comment in post.get_all_comments %}

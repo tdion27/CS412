@@ -24,6 +24,13 @@ h1 {
     margin: 0 auto;
 }
 
+.grid-container img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;  
+    display: block;
+}
+
 /* Individual Profile Cards */
 article {
     background-color: #ffffff;
@@ -42,10 +49,11 @@ article:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Profile Picture Styling */
-article img {
+/* Profile Picture Styling - increased specificity */
+.grid-container article img {
     width: 120px;
     height: 120px;
+    aspect-ratio: auto; /* Clears the 1/1 grid ratio override */
     border-radius: 50%; /* Makes the image a perfect circle */
     object-fit: cover; /* Prevents stretching */
     border: 2px solid #dbdbdb;

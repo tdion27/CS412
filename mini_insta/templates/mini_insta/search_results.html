@@ -4,7 +4,7 @@
 {% block content %}
 <main>
     <h2>Search Results for "{{ query }}"</h2>
-    <p><a href="{% url 'search' profile.pk %}"> New Search</a></p>
+    <p><a href="{% url 'search' %}"> New Search</a></p>
     <h3>Profiles</h3>
     {% for p in profiles %}
         <div>

@@ -7,7 +7,7 @@
 <h1>Update this Profile</h1>
  
  
-<form action="{% url 'update_profile' profile.pk %}" method="POST">
+<form action="{% url 'update_profile' %}" method="POST">
     {% csrf_token %}
     <table>
     {{form.as_table}}
@@ -15,7 +15,7 @@
  
  
     <input type="submit" name="submit" value="Update">
-    <form action="{% url 'profile' profile.pk %}" method="GET">
+    <form action="{% url 'profile' %}" method="GET">
         <input type="submit" value="Cancel">
     </form>
 </form>

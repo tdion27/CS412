@@ -7,12 +7,18 @@
 <main class="grid-container">
 
     <article>
-		<img src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}">
+        <img src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}">
         
         <div>
         <h2>{{profile.display_name}}</h2>
         <h3>{{profile.username}}</h3>
         <h3>{{profile.bio_text}}</h3>
+        {% if request.user.is_authenticated and request.user != profile.user %}
+            <div>
+                <a href="{% url 'follow' profile.pk %}">Follow</a>
+                <a href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
+            </div>
+        {% endif %}
         <h4> 
             <a href="{% url 'show_followers' profile.pk %}">
                 {{ profile.get_num_followers }} Followers
@@ -38,6 +44,11 @@
         </div>
 {% endfor %}
 <br>
- <a href="{% url 'update_profile' profile.pk %}">Update Profile</a> 
+
+<!-- Wrapped in decision logic and removed the PK parameter -->
+{% if request.user.is_authenticated and request.user == profile.user %}
+    <a href="{% url 'update_profile' %}">Update Profile</a> 
+{% endif %}
+
 </main>
 {% endblock %}

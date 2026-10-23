@@ -3,6 +3,7 @@
 # Description: Contains the models  for the mini_insta app
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -13,6 +14,9 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
     bio_text = models.TextField(blank=True)
     join_date = models.DateTimeField(auto_now=True)
+    
+    #Foreign key to associate the profile with a user
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     #Allow a string representation for a profile to be created
     def __str__(self):
@@ -106,7 +110,7 @@ class Photo(models.Model):
 #Define the follow model
 class Follow(models.Model):
 
-     #Use relared_name because we have two foreign keys
+     #Use related_name because we have two foreign keys
      profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile")
      follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower_profile")
      time_of_follow = models.DateTimeField(auto_now_add=True)

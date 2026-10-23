@@ -1,0 +1,20 @@
+<!-- mini_insta/templates/mini_insta/create_profile_form.html -->
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main>
+    <h2>Create an Account</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <h3>Account Details</h3>
+        {{ user_creation_form.as_p }}
+        
+        <h3>Profile Details</h3>
+        {{ form.as_p }}
+        
+        <input type="submit">
+    </form>
+</main>
+{% endblock %}

@@ -14,13 +14,22 @@
     {% endblock %}    
     
     <footer>
-        {% if profile %}
-        <a href="{% url 'show_feed' profile.pk %}">My Feed</a>
-        <a href="{% url 'search' profile.pk %}">Search</a>
-        <a href="{% url 'create_post' profile.pk %}">New Post</a>
-        <a href="{% url 'profile' profile.pk %}">Profile</a>
+        {% if request.user.is_authenticated %}
+        <p>Logged in as: {{ request.user.username }}</p>
+        <a href="{% url 'show_feed' %}">Feed</a>
+        <a href="{% url 'search' %}">Search</a>
+        <a href="{% url 'create_post' %}">New Post</a>
+        <a href="{% url 'profile' %}">My Profile</a>
+        <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+        </form>
+        {% else %}
+        <p>Not logged in</p>
+        <a href="{% url 'show_all' %}">Home</a>
+        <a href="{% url 'login' %}">Log In</a>
+        <a href="{% url 'create_profile' %}">Register</a>
         {% endif %}
-        <a href="{% url 'show_all' %}">Show All Profiles</a>
     </footer>
     </body>
 </html>
