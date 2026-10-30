@@ -1,0 +1,90 @@
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+<h2>Voter Data Graphs</h2>
+<h1>Search Form</h1>
+
+<form action="{% url 'graphs' %}" method="GET">
+    <table>
+        <tr>
+            <th>Party:</th>
+            <td>
+                <select name="party">
+                    <option value="">All</option>
+                    {% for p in parties %}
+                        <option value="{{ p }}" {% if request_get.party == p %}selected{% endif %}>{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <th>Min DOB (Year):</th>
+            <td>
+                <select name="min_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if request_get.min_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Max DOB (Year):</th>
+            <td>
+                <select name="max_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if request_get.max_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Voter Score:</th>
+            <td>
+                <select name="voter_score">
+                    <option value="">Any</option>
+                    {% for i in "012345" %}
+                        <option value="{{ i }}" {% if request_get.voter_score == i %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Elections:</th>
+            <td>
+                <label><input type="checkbox" name="v20state" value="true" {% if request_get.v20state %}checked{% endif %}> 2020 State</label><br>
+                <label><input type="checkbox" name="v21town" value="true" {% if request_get.v21town %}checked{% endif %}> 2021 Town</label><br>
+                <label><input type="checkbox" name="v21primary" value="true" {% if request_get.v21primary %}checked{% endif %}> 2021 Primary</label><br>
+                <label><input type="checkbox" name="v22general" value="true" {% if request_get.v22general %}checked{% endif %}> 2022 General</label><br>
+                <label><input type="checkbox" name="v23town" value="true" {% if request_get.v23town %}checked{% endif %}> 2023 Town</label>
+            </td>
+        </tr>
+        
+        <tr>
+            <!-- Replaced the "Search" button with "Filter Graphs" inside the same table -->
+            <td><input type="submit" value="Filter Graphs"></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+
+<hr>
+
+<div>
+    {{ graph_div_year|safe }}
+</div>
+
+<div>
+    {{ graph_div_party|safe }}
+</div>
+
+<div>
+    {{ graph_div_elections|safe }}
+</div>
+
+{% endblock %}

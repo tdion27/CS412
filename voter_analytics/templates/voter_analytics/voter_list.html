@@ -1,0 +1,116 @@
+<!-- voter_analytics/templates/voter_analytics/voter_list.html -->
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+<h2>Voter Database</h2>
+
+<h1>Search Form</h1>
+<form action="{% url 'voters' %}" method="GET">
+    <table>
+        <tr>
+            <th>Party:</th>
+            <td>
+                <select name="party">
+                    <option value="">All</option>
+                    {% for p in parties %}
+                        <option value="{{ p }}" {% if request_get.party == p %}selected{% endif %}>{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <th>Min DOB (Year):</th>
+            <td>
+                <select name="min_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if request_get.min_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Max DOB (Year):</th>
+            <td>
+                <select name="max_dob">
+                    <option value="">Any</option>
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if request_get.max_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Voter Score:</th>
+            <td>
+                <select name="voter_score">
+                    <option value="">Any</option>
+                    {% for i in "012345" %}
+                        <option value="{{ i }}" {% if request_get.voter_score == i %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Elections:</th>
+            <td>
+                <label><input type="checkbox" name="v20state" value="true" {% if request_get.v20state %}checked{% endif %}> 2020 State</label>
+                <br>
+                <label><input type="checkbox" name="v21town" value="true" {% if request_get.v21town %}checked{% endif %}> 2021 Town</label>
+                <br>
+                <label><input type="checkbox" name="v21primary" value="true" {% if request_get.v21primary %}checked{% endif %}> 2021 Primary</label>
+                <br>
+                <label><input type="checkbox" name="v22general" value="true" {% if request_get.v22general %}checked{% endif %}> 2022 General</label>
+                <br>
+                <label><input type="checkbox" name="v23town" value="true" {% if request_get.v23town %}checked{% endif %}> 2023 Town</label>
+            </td>
+        </tr>
+        
+        <tr>
+            <td><input type="submit" value="Search"></td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+
+<!-- Results Table -->
+<table border="1">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street Address</th>
+        <th>DOB</th>
+        <th>Party</th>
+        <th>Score</th>
+        <th>Details</th>
+    </tr>
+    {% for v in voters %}
+    <tr>
+        <td>{{ v.first_name }}</td>
+        <td>{{ v.last_name }}</td>
+        <td>{{ v.street_number }} {{ v.street_name }} {% if v.apartment_number %}Apt {{ v.apartment_number }}{% endif %}</td>
+        <td>{{ v.date_of_birth }}</td>
+        <td>{{ v.party_affiliation }}</td>
+        <td>{{ v.voter_score }}</td>
+        <td><a href="{% url 'voter' v.pk %}">View</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- we need to include the filters in the paginate urls in order to keep them on when we navigate between pages-->
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&party={{ request_get.party }}&min_dob={{ request_get.min_dob }}&max_dob={{ request_get.max_dob }}&voter_score={{ request_get.voter_score }}&v20state={{ request_get.v20state }}&v21town={{ request_get.v21town }}&v21primary={{ request_get.v21primary }}&v22general={{ request_get.v22general }}&v23town={{ request_get.v23town }}">Previous</a>
+    {% endif %}
+    
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&party={{ request_get.party }}&min_dob={{ request_get.min_dob }}&max_dob={{ request_get.max_dob }}&voter_score={{ request_get.voter_score }}&v20state={{ request_get.v20state }}&v21town={{ request_get.v21town }}&v21primary={{ request_get.v21primary }}&v22general={{ request_get.v22general }}&v23town={{ request_get.v23town }}">Next</a>
+    {% endif %}
+</div>
+{% endblock %}
