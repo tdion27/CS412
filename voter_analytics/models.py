@@ -1,6 +1,12 @@
+# File: models.py
+# Author: Thomas Dion (tdion@bu.edu), 10/27/2026
+# Description: Contains the models for the voter_analytics app
+
 from django.db import models
 
 # Create your models here.
+
+#Define the Voter model class
 class Voter(models.Model):
     '''store and represent the data from one registered voter'''
     last_name = models.TextField()
@@ -36,8 +42,7 @@ def load_data():
         fields = line.split(',')
        
         try:
-            # create a new instance of Voter object with this record from CSV
-            # Using .strip() ensures we remove invisible newline characters or extra spaces
+            # create a new instance of Voter object with this record from the file
             voter = Voter(last_name=fields[1],
                           first_name=fields[2],
                           street_number=fields[3],
@@ -59,4 +64,5 @@ def load_data():
             print(f'Created voter: {voter}')
         except:
             print(f"Skipped: {fields}")
+    #A final print statement with the count of total obhects created
     print(f'Done. Created {len(Voter.objects.all())} Voters.')

@@ -1,10 +1,14 @@
+# File: views.py
+# Author: Thomas Dion (tdion@bu.edu), 10/27/2026
+# Description: Contains the views for the views app
+
 from django.views.generic import ListView, DetailView
 from .models import Voter
 import plotly
 import plotly.graph_objs as go
 
+#View to display voter records
 class VoterListView(ListView):
-    '''View to display voter records'''
     
     template_name = 'voter_analytics/voter_list.html'
     model = Voter
@@ -12,9 +16,11 @@ class VoterListView(ListView):
     paginate_by = 100
     
     def get_queryset(self):
+        '''A method to filter the queryset'''
         # start with entire queryset
         voters = super().get_queryset()
 
+        #Filters
         if 'party' in self.request.GET:
             party = self.request.GET['party']
             if party:
@@ -70,17 +76,18 @@ class VoterListView(ListView):
         context['request_get'] = self.request.GET
         return context
 
+#A view to show a voter record
 class VoterDetailView(DetailView):
-    '''View to display a single voter record'''
     model = Voter
     template_name = 'voter_analytics/voter_detail.html'
     context_object_name = 'voter'
 
+#A view to display graphs of the data
 class VoterGraphsView(VoterListView):
-    '''View to display graphs of voter data'''
     template_name = 'voter_analytics/graphs.html'
     
     def get_context_data(self, **kwargs):
+        '''Create the context (in this case, graphs and charts) for the template'''
         context = super().get_context_data(**kwargs)
         voters = self.get_queryset()
         voter_count = len(voters)
