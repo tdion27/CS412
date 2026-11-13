@@ -1,9 +1,10 @@
+<!-- dadjoks/templates/dadjokes/pictures.html -->
 {% extends 'dadjokes/base.html' %}
 {% block content %}
 <h2>All Pictures</h2>
 {% for p in pictures %}
 <div>
-    <a href="{% url 'dadjokes_picture' p.pk %}"><img src="{{p.image_url}}" alt="Silly picture" width="250"></a>
+    <a href="{% url 'dadjokes_picture' p.pk %}"><img src="{{p.image_url}}" width="250"></a>
     <p><em>{{p.name}}, {{p.timestamp}}</em></p>
 </div>
 {% endfor %}
