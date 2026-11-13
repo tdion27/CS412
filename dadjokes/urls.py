@@ -1,6 +1,10 @@
+# File: urls.py
+# Author: Thomas Dion (tdion@bu.edu), 11/13/2026
+# Description: Contains the urls for the dadjokes app
 from django.urls import path
 from .views import *
 
+#Define the URL patterns here:
 urlpatterns = [
     path('', RandomView.as_view(), name='dadjokes_home'),
     path('random', RandomView.as_view(), name='dadjokes_random'),
