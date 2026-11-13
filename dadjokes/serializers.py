@@ -1,3 +1,6 @@
+# File: seralizers.py
+# Author: Thomas Dion (tdion@bu.edu), 11/13/2026
+# Description: Contains the forms for the serializers app
 from rest_framework import serializers
 from .models import *
 
