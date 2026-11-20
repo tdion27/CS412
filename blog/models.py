@@ -1,3 +1,6 @@
+# File: forms.py
+# Author: Thomas Dion (tdion@bu.edu), 11/13/2026
+# Description: Contains the models for the dadjokes app
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User

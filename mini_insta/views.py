@@ -9,6 +9,14 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth import authenticate
+from rest_framework import generics, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import ProfileSerializer, PostSerializer, CreatePostSerializer, UserSerializer
 
 # Create your views here.
 
@@ -260,3 +268,110 @@ class UnlikeView(CustomLoginRequiredMixin, DetailView):
         logged_in_profile = Profile.objects.get(user=request.user)
         Like.objects.filter(post=post, profile=logged_in_profile).delete()
         return super().dispatch(request, *args, **kwargs)
+
+class UserRegistrationView(generics.CreateAPIView):
+    '''Creates a new user'''
+    serializer_class = UserSerializer
+
+
+class UserLoginView(APIView):
+    '''Returns an authentication token'''
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        #Authentication
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            #Create the token
+            token, created = Token.objects.get_or_create(user=user)
+            profile = Profile.objects.filter(user=user).first()
+            return Response({'token': token.key, 'profile_id': profile.pk if profile else None},
+                            status=status.HTTP_200_OK)
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileListAPIView(generics.ListAPIView):
+    '''Returns the list of profiles'''
+    queryset = Profile.objects.all().order_by('id')
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+
+class ProfileDetailAPIView(generics.RetrieveAPIView):
+    '''Returns a single profile.'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+
+class ProfilePostsAPIView(generics.ListAPIView):
+    '''Returns the posts for a profile'''
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def get_queryset(self):
+        '''Get the set of posts for a profile, ordered by most recent'''
+        return Post.objects.filter(profile__pk=self.kwargs['pk']).order_by('-timestamp')
+
+
+class ProfileFeedAPIView(generics.ListAPIView):
+    '''Return the feed (posts from followed profiles) for one profile.'''
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def get_queryset(self):
+        '''Get the posts from the users that the user follows'''
+        followed_ids = Follow.objects.filter(follower_profile__pk=self.kwargs['pk']).values_list('profile_id')
+        return Post.objects.filter(profile__in=followed_ids).order_by('-timestamp')
+
+
+class PostListCreateAPIView(generics.ListCreateAPIView):
+    '''Allows an autheticated user to create a post'''
+    queryset = Post.objects.all().order_by('-timestamp')
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreatePostSerializer
+        return PostSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(profile=Profile.objects.filter(user=self.request.user).first())
+
+
+class PostDetailAPIView(generics.RetrieveAPIView):
+    '''Returns a single posts'''
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+
+class PostUpdateAPIView(generics.UpdateAPIView):
+    '''Updates a post'''
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def perform_update(self, serializer):
+        ''''Updated the post if its owner equals the user'''
+        if self.request.user == serializer.instance.profile.user:
+            serializer.save()
+
+
+class PostDeleteAPIView(generics.DestroyAPIView):
+    '''Deletes a post'''
+    queryset = Post.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def perform_destroy(self, instance):
+        '''Deletes the post if its owner equals the user'''
+        if self.request.user == instance.profile.user:
+            instance.delete()

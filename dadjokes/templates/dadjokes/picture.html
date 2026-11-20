@@ -1,6 +1,7 @@
+<!-- dadjoks/templates/dadjokes/picture.html -->
 {% extends 'dadjokes/base.html' %}
 {% block content %}
 <h2>Picture #{{picture.pk}}</h2>
-<img src="{{picture.image_url}}" alt="Silly picture" width="500">
+<img src="{{picture.image_url}}" width="500">
 <p><em>Contributed by {{picture.name}} on {{picture.timestamp}}</em></p>
 {% endblock %}

@@ -1,11 +1,11 @@
+# File: forms.py
+# Author: Thomas Dion (tdion@bu.edu), 11/13/2026
+# Description: Contains the serializers for the dadjokes app
 from rest_framework import serializers
 from .models import *
  
 class ArticleSerializer(serializers.ModelSerializer):
-    '''
-    A serializer for the Article model.
-    Specify which model/fields to send in the API.
-    '''
+    '''a serializer for the article model'''
     class Meta:
         model = Article
         fields = ['id', 'title', 'author', 'text', 'published', 'image_file']

@@ -1,3 +1,6 @@
+# File: forms.py
+# Author: Thomas Dion (tdion@bu.edu), 11/13/2026
+# Description: Contains the forms for the dadjokes app
 from django import forms
 from .models import Article, Comment
  

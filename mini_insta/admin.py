@@ -1,4 +1,4 @@
-# File: models.py
+# File: admin.py
 # Author: Thomas Dion (tdion@bu.edu)
 # Description: Registers the models for the mini_insta app
 from django.contrib import admin
